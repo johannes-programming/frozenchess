@@ -43,7 +43,7 @@ def BasePly(
     return a, b, c
 
 
-@keyalias.classdecorator(start=0, stop=1, promotion=2)
+@keyalias.getdecorator(start=0, stop=1, promotion=2)
 class Ply(BasePly, Mirrorable, UCIStylable):
     @classmethod
     def byUCIStyled(cls, styled: Any) -> Self:

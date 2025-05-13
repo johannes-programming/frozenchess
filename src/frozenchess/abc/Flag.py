@@ -12,7 +12,7 @@ __all__ = ["Flag"]
 class BaseFlag(metaclass=FlagMeta): ...
 
 
-class Flag(BaseFlag, enum.IntFlag, FENStylable):
+class Flag(BaseFlag, enum.IntFlag):  # , FENStylable):
     # overwrites
     @classmethod
     def byFENStyled(cls, styled: Any) -> Self:

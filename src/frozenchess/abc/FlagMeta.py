@@ -6,5 +6,5 @@ __all__ = ["FlagMeta"]
 
 class FlagMeta(EnumMeta, ABCMeta):
     def __call__(cls, value, *args, **kwargs):
-        value = value % cls._MOD
+        value = value % cls._mod()
         return super().__call__(value, *args, **kwargs)

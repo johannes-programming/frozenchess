@@ -12,16 +12,20 @@ from frozenchess.abc import *
 __all__ = ["Piece"]
 
 
-class Color(Flag, Mirrorable):
+class Color(Flag):  # , Mirrorable):
     WHITE = True
     BLACK = False
+
+    @classmethod
+    def _mod(cls):
+        return 2
 
     def mirror(self) -> Self:
         "This method swaps the players."
         return -self
 
 
-class Kind(enum.StrEnum, UCIStylable):
+class Kind(enum.StrEnum):  # , UCIStylable):
     PAWN = ""
     KNIGHT = "N"
     BISHOP = "B"
@@ -64,7 +68,7 @@ def BasePiece(
 
 
 @keyalias.getdecorator(color=0, kind=1)
-class Piece(BasePiece, FENStylable, Mirrorable):
+class Piece(BasePiece, FENStylable):  # , Mirrorable):
     @classmethod
     def byFENStyled(cls, styled: Any) -> Self:
         return cls._ANTIFEN[str(styled)]

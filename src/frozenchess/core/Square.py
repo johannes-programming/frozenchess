@@ -18,7 +18,7 @@ class Color(Flag):
         return -self
 
 
-class Square(Flag, Mirrorable, UCIStylable):
+class Square(Flag):  # , Mirrorable, UCIStylable, Starting):
 
     (
         A1,
@@ -108,7 +108,7 @@ class Square(Flag, Mirrorable, UCIStylable):
         ans: Self = type(self)[n]
         return ans
 
-    def native(self) -> Piece:
+    def starting(self) -> Piece:
         return self._NATIVE
 
     def rank(self) -> int:
@@ -121,7 +121,7 @@ class Square(Flag, Mirrorable, UCIStylable):
 def setup_getnative(square: Square) -> Piece:
     ans: Optional[Piece] = None
     rank: int = square.rank()
-    kind: Piece.Kind = square.file.native()
+    kind: Piece.Kind = square.file().starting()
     if rank == 1:
         ans = Piece(color=Piece.Color.WHITE, kind=kind)
     elif rank == 2:

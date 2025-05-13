@@ -10,7 +10,7 @@ from frozenchess.core.Square import Square
 __all__ = ["Castle"]
 
 
-class Castle(Flag, Mirrorable, Starting):
+class Castle(Flag):  # , Mirrorable, Starting):
     NONE = 0
     WHITE_KINGSIDE = 1
     WHITE_QUEENSIDE = 2
@@ -27,6 +27,10 @@ class Castle(Flag, Mirrorable, Starting):
     WHITE_KINGSIDE_BLACK_BOTH = 13
     WHITE_QUEENSIDE_BLACK_BOTH = 14
     ALL = 15
+
+    @classmethod
+    def _mod(cls) -> int:
+        return 16
 
     @classmethod
     def byPlacement(cls, placement: Placement) -> Self:

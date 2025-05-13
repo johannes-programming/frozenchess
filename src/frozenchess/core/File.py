@@ -19,7 +19,7 @@ _NATIVES = [
 ]
 
 
-class File(Flag, Starting):
+class File(Flag):  # , Starting):
     (
         A,
         B,
@@ -30,6 +30,10 @@ class File(Flag, Starting):
         G,
         H,
     ) = range(8)
+
+    @classmethod
+    def _mod(cls) -> int:
+        return 8
 
     def starting(self) -> Piece.Kind:
         return _NATIVES[self]
