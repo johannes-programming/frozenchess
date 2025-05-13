@@ -1,5 +1,4 @@
-from frozenchess.core.BitBoard import BitBoard
-from frozenchess.core.CastlingAvailability import CastlingAvailability
+from frozenchess.core.Castle import CastlingAvailability
 from frozenchess.core.File import File
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Placement import Placement
