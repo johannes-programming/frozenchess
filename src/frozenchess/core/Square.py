@@ -1,21 +1,24 @@
 from __future__ import annotations
 
-from enum import IntEnum
 from typing import *
+
+from frozenchess.abc import *
+from frozenchess.core.File import File
+from frozenchess.core.Piece import Piece
 
 __all__ = ["Square"]
 
 
-class Color(IntEnum):
+class Color(Flag):
     LIGHT = True
     DARK = False
 
     def mirror(self) -> Self:
         "This method swaps the players."
-        return type(self)(1 - self)
+        return -self
 
 
-class Square(IntEnum):
+class Square(Flag, Mirrorable, UCIStylable):
 
     (
         A1,
@@ -84,16 +87,62 @@ class Square(IntEnum):
         H8,
     ) = range(64)
 
+    @classmethod
+    def byUCIStyled(cls, styled: Any) -> Self:
+        s: str = str(styled)
+        for x in cls:
+            if x.name.lower() == s:
+                return x
+        raise ValueError(styled)
+
     def color(self) -> Color:
         return Color(self % 2)
 
+    def file(self) -> File:
+        return File(self // 8)
+
     def mirror(self) -> Self:
         "This method swaps the players."
-        return type(self)(64 - self)
+        r: int = 9 - self.rank()
+        n: str = self.file().name + str(r)
+        ans: Self = type(self)[n]
+        return ans
+
+    def native(self) -> Piece:
+        return self._NATIVE
+
+    def rank(self) -> int:
+        return (self // 8) + 1
+
+    def uciStyled(self) -> str:
+        return self.name.lower()
+
+
+def setup_getnative(square: Square) -> Piece:
+    ans: Optional[Piece] = None
+    rank: int = square.rank()
+    kind: Piece.Kind = square.file.native()
+    if rank == 1:
+        ans = Piece(color=Piece.Color.WHITE, kind=kind)
+    elif rank == 2:
+        ans = Piece(color=Piece.Color.WHITE, kind=Piece.Kind.PAWN)
+    elif rank == 7:
+        ans = Piece(color=Piece.Color.BLACK, kind=Piece.Kind.PAWN)
+    elif rank == 8:
+        ans = Piece(color=Piece.Color.BLACK, kind=kind)
+    return ans
 
 
 def setup() -> None:
     Square.Color = Color
+
+    for x in Square:
+        x._NATIVE = setup_getnative(x)
+        if x:
+            x._fen = x.name.lower()
+        else:
+            x._fen = "-"
+        x._uci = x.name.lower()
 
 
 setup()

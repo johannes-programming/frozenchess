@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from enum import IntEnum
 from typing import *
 
 import keyalias
 from normedtuple import normedtuple
 
+from frozenchess.abc import *
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Square import Square
 
@@ -44,7 +44,19 @@ def BasePly(
 
 
 @keyalias.classdecorator(start=0, stop=1, promotion=2)
-class Ply(BasePly):
+class Ply(BasePly, Mirrorable, UCIStylable):
+    @classmethod
+    def byUCIStyled(cls, styled: Any) -> Self:
+        s: str = str(styled)
+        a: str = s[:2]
+        b: str = s[2:4]
+        c: str = s[4:]
+        x: Square = Square.byUCIStyled(a)
+        y: Square = Square.byUCIStyled(b)
+        z: Piece.Kind = Piece.Kind.byUCIStyled(c)
+        ans: Self = cls([x, y, z])
+        return ans
+
     def isempty(self) -> bool:
         return self == EMPTY
 

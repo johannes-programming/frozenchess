@@ -1,12 +1,44 @@
 from __future__ import annotations
 
-from enum import IntEnum
+import enum
 from typing import *
 
 import keyalias
 from normedtuple import normedtuple
 
+from frozenchess._utils import *
+from frozenchess.abc import *
+
 __all__ = ["Piece"]
+
+
+class Color(Flag, Mirrorable):
+    WHITE = True
+    BLACK = False
+
+    def mirror(self) -> Self:
+        "This method swaps the players."
+        return -self
+
+
+class Kind(enum.StrEnum, UCIStylable):
+    PAWN = ""
+    KNIGHT = "N"
+    BISHOP = "B"
+    ROOK = "R"
+    QUEEN = "Q"
+    KING = "K"
+
+    @classmethod
+    def byUCIStyled(cls, styled: Any) -> Self:
+        s: str = str(styled)
+        if s == "K":
+            raise ValueError(styled)
+        ans: Self = cls(s)
+        return ans
+
+    def uciStyled(self) -> str:
+        return self.value
 
 
 @normedtuple
@@ -31,26 +63,15 @@ def BasePiece(
     return c, k
 
 
-class Color(IntEnum):
-    WHITE = True
-    BLACK = False
-
-    def mirror(self) -> Self:
-        "This method swaps the players."
-        return type(self)(1 - self)
-
-
-class Kind(IntEnum):
-    PAWN = 1
-    KNIGHT = 2
-    BISHOP = 3
-    ROOK = 4
-    QUEEN = 5
-    KING = 6
-
-
 @keyalias.getdecorator(color=0, kind=1)
-class Piece(BasePiece):
+class Piece(BasePiece, FENStylable, Mirrorable):
+    @classmethod
+    def byFENStyled(cls, styled: Any) -> Self:
+        return cls._ANTIFEN[str(styled)]
+
+    def fenStyled(self) -> str:
+        return type(self)._FEN[self]
+
     def mirror(self) -> Self:
         "This method swaps the players."
         c: Color = self.color.mirror()
@@ -62,6 +83,23 @@ class Piece(BasePiece):
 def setup() -> None:
     Piece.Color = Color
     Piece.Kind = Kind
+    Color.WHITE._fen = "w"
+    Color.BLACK._fen = "b"
+    Piece._ANTIFEN = {
+        "P": Piece(color=Color.WHITE, kind=Kind.PAWN),
+        "N": Piece(color=Color.WHITE, kind=Kind.KNIGHT),
+        "B": Piece(color=Color.WHITE, kind=Kind.BISHOP),
+        "R": Piece(color=Color.WHITE, kind=Kind.ROOK),
+        "Q": Piece(color=Color.WHITE, kind=Kind.QUEEN),
+        "K": Piece(color=Color.WHITE, kind=Kind.KING),
+        "p": Piece(color=Color.BLACK, kind=Kind.PAWN),
+        "n": Piece(color=Color.BLACK, kind=Kind.KNIGHT),
+        "b": Piece(color=Color.BLACK, kind=Kind.BISHOP),
+        "r": Piece(color=Color.BLACK, kind=Kind.ROOK),
+        "q": Piece(color=Color.BLACK, kind=Kind.QUEEN),
+        "k": Piece(color=Color.BLACK, kind=Kind.KING),
+    }
+    Piece._FEN = antidict(Piece._ANTIFEN)
 
 
 setup()

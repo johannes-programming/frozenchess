@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from typing import *
 
+import chess
 from normedtuple import normedtuple
 
+from frozenchess.abc import *
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Square import Square
 
@@ -32,7 +34,49 @@ def BasePlacement(
     return ans
 
 
-class Placement(BasePlacement):
+class Placement(BasePlacement, Starting):
+    @classmethod
+    def byFENStyled(cls, styled: Any) -> Self:
+        full_fen: str = str(styled) + " w - - 0 1"
+        board: chess.Board = chess.Board(full_fen)
+        data: list = list()
+        p: Any = None
+        for i in range(64):
+            x: Any = board.piece_at(i)
+            if x:
+                s: Any = x.symbol()
+                p = Piece.byFENStyled(s)
+            else:
+                p = None
+            data.append(p)
+        ans: Self = cls(data)
+        return ans
+
+    def fenStyled(self) -> str:
+        fen_rows: list = []
+        for rank in range(8, 0, -1):  # ranks 8 to 1
+            row: str = ""
+            empty: int = 0
+            for file in range(8):
+                i: int = rank * 8 + file - 8
+                piece: Optional[Piece] = self[i]
+                if piece is None:
+                    empty += 1
+                    continue
+                if empty > 0:
+                    row += str(empty)
+                    empty = 0
+                row += piece.fenStyled()
+            if empty > 0:
+                row += str(empty)
+            fen_rows.append(row)
+
+        return "/".join(fen_rows)
+
     def mirror(self) -> Self:
         "This method swaps the players."
         return type(self)(reversed(self))
+
+    @classmethod
+    def starting(cls) -> Self:
+        return cls.byFENStyled("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
