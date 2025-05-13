@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from enum import IntFlag
 from typing import *
 
 from normedtuple import normedtuple
@@ -8,17 +9,20 @@ from frozenchess.core.Piece import Piece
 from frozenchess.core.Placement import Placement
 from frozenchess.core.Square import Square
 
-__all__ = ["FEN"]
+__all__ = ["CastlingAvailability"]
 
+
+class CastlingAvailability(IntFlag):
+    
 
 @normedtuple
-def BaseFEN(
-    cls: type,
-    other: Optional[Iterable] = None,
-    /,
-    *,
-    placement: Optional[Placement] = None,
-    turn: Optional[Piece.Color] = None,
+def BaseCastlingAvailability(
+    cls: type, 
+    other: Optional[Iterable] = None, /, *, 
+    placement:Optional[Placement] = None, 
+    turn:Optional[Piece.Color] = None,
+    
+
 ) -> list:
     ans: list = [None] * 64
     if other is not None:

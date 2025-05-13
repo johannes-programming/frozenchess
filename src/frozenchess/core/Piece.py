@@ -59,5 +59,9 @@ class Piece(BasePiece):
         return ans
 
 
-Piece.Color = Color
-Piece.Kind = Kind
+def setup() -> None:
+    Piece.Color = Color
+    Piece.Kind = Kind
+
+
+setup()

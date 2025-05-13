@@ -84,9 +84,16 @@ class Square(IntEnum):
         H8,
     ) = range(64)
 
+    def color(self) -> Color:
+        return Color(self % 2)
+
     def mirror(self) -> Self:
         "This method swaps the players."
         return type(self)(64 - self)
 
 
-Square.Color = Color
+def setup() -> None:
+    Square.Color = Color
+
+
+setup()
