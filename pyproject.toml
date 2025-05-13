@@ -9,7 +9,7 @@ authors = [
     { email = "johannes-programming@mailfence.com", name = "Johannes" },
 ]
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 2 - Pre-Alpha",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
@@ -18,13 +18,16 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [
+    "keyalias>=1.0.3",
+    "normedtuple>=0.0.1+local.2",
+]
 description = "frozenchess"
 keywords = []
 name = "frozenchess"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "0.0.0.dev0"
+version = "0.0.0+local"
 
 [project.license]
 file = "LICENSE.txt"
