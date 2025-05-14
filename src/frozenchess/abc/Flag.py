@@ -3,16 +3,13 @@ from __future__ import annotations
 import enum
 from typing import *
 
+from frozenchess.abc.ABCEnum import ABCEnum
 from frozenchess.abc.FENStylable import FENStylable
-from frozenchess.abc.FlagMeta import FlagMeta
 
 __all__ = ["Flag"]
 
 
-class BaseFlag(metaclass=FlagMeta): ...
-
-
-class Flag(BaseFlag, enum.IntFlag):  # , FENStylable):
+class Flag(enum.IntFlag):  # , FENStylable):
     # overwrites
     @classmethod
     def byFENStyled(cls, styled: Any) -> Self:

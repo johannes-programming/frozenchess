@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import enum
+from enum import StrEnum
 from typing import *
 
 import keyalias
@@ -12,7 +12,7 @@ from frozenchess.abc import *
 __all__ = ["Piece"]
 
 
-class Color(Flag):  # , Mirrorable):
+class Color(Mirrorable, Flag, metaclass=FlagMeta):
     WHITE = True
     BLACK = False
 
@@ -22,10 +22,10 @@ class Color(Flag):  # , Mirrorable):
 
     def mirror(self) -> Self:
         "This method swaps the players."
-        return -self
+        return ~self
 
 
-class Kind(enum.StrEnum):  # , UCIStylable):
+class Kind(UCIStylable, StrEnum, metaclass=ABCEnumMeta):
     PAWN = ""
     KNIGHT = "N"
     BISHOP = "B"
@@ -68,7 +68,7 @@ def BasePiece(
 
 
 @keyalias.getdecorator(color=0, kind=1)
-class Piece(BasePiece, FENStylable):  # , Mirrorable):
+class Piece(BasePiece, FENStylable, Mirrorable):
     @classmethod
     def byFENStyled(cls, styled: Any) -> Self:
         return cls._ANTIFEN[str(styled)]

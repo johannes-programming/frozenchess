@@ -1,3 +1,5 @@
+from frozenchess.abc.ABCEnum import ABCEnum
+from frozenchess.abc.ABCEnumMeta import ABCEnumMeta
 from frozenchess.abc.FENStylable import FENStylable
 from frozenchess.abc.Flag import Flag
 from frozenchess.abc.FlagMeta import FlagMeta

@@ -19,7 +19,7 @@ _NATIVES = [
 ]
 
 
-class File(Flag):  # , Starting):
+class File(Starting, Flag, metaclass=FlagMeta):
     (
         A,
         B,

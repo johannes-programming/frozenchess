@@ -10,22 +10,12 @@ from frozenchess.core.Square import Square
 __all__ = ["Castle"]
 
 
-class Castle(Flag):  # , Mirrorable, Starting):
+class Castle(Mirrorable, Starting, Flag, metaclass=FlagMeta):
     NONE = 0
     WHITE_KINGSIDE = 1
     WHITE_QUEENSIDE = 2
-    WHITE_BOTH = 3
     BLACK_KINGSIDE = 4
-    WHITE_KINGSIDE_BLACK_KINGSIDE = 5
-    WHITE_QUEENSIDE_BLACK_KINGSIDE = 6
-    WHITE_BOTH_BLACK_KINGSIDE = 7
     BLACK_QUEENSIDE = 8
-    WHITE_KINGSIDE_BLACK_QUEENSIDE = 9
-    WHITE_QUEENSIDE_BLACK_QUEENSIDE = 10
-    WHITE_BOTH_BLACK_QUEENSIDE = 11
-    BLACK_BOTH = 12
-    WHITE_KINGSIDE_BLACK_BOTH = 13
-    WHITE_QUEENSIDE_BLACK_BOTH = 14
     ALL = 15
 
     @classmethod

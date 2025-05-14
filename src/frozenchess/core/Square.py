@@ -15,10 +15,10 @@ class Color(Flag):
 
     def mirror(self) -> Self:
         "This method swaps the players."
-        return -self
+        return ~self
 
 
-class Square(Flag):  # , Mirrorable, UCIStylable, Starting):
+class Square(Mirrorable, UCIStylable, Starting, Flag, metaclass=FlagMeta):
 
     (
         A1,
