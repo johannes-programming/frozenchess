@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import *
 
-from frozenchess.abc import *
+from frozenchess.bases import *
 from frozenchess.core.Piece import Piece
 
 __all__ = ["File"]
@@ -19,7 +19,7 @@ _NATIVES = [
 ]
 
 
-class File(Starting, Flag, metaclass=FlagMeta):
+class File(Starting, Flag):
     (
         A,
         B,
@@ -32,8 +32,8 @@ class File(Starting, Flag, metaclass=FlagMeta):
     ) = range(8)
 
     @classmethod
-    def _mod(cls) -> int:
+    def _mod(cls: type, /) -> int:
         return 8
 
-    def starting(self) -> Piece.Kind:
+    def starting(self: Self, /) -> Piece.Kind:
         return _NATIVES[self]

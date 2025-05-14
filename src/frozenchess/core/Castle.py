@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import *
 
-from frozenchess.abc import *
+from frozenchess.bases import *
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Placement import Placement
 from frozenchess.core.Square import Square
@@ -10,7 +10,7 @@ from frozenchess.core.Square import Square
 __all__ = ["Castle"]
 
 
-class Castle(Mirrorable, Starting, Flag, metaclass=FlagMeta):
+class Castle(Mirrorable, Starting, Flag):
     NONE = 0
     WHITE_KINGSIDE = 1
     WHITE_QUEENSIDE = 2
@@ -19,18 +19,18 @@ class Castle(Mirrorable, Starting, Flag, metaclass=FlagMeta):
     ALL = 15
 
     @classmethod
-    def _mod(cls) -> int:
+    def _mod(cls: type, /) -> int:
         return 16
 
     @classmethod
-    def byPlacement(cls, placement: Placement) -> Self:
+    def byPlacement(cls: type, /, placement: Placement) -> Self:
         p: Placement = Placement(placement)
         a1 = p[Square.A1] == Piece.byFENStyled("R")
         e1 = p[Square.E1] == Piece.byFENStyled("K")
         h1 = p[Square.H1] == Piece.byFENStyled("R")
-        a8 = p[Square.A8] == Piece.byFENStyled("R")
-        e8 = p[Square.E8] == Piece.byFENStyled("K")
-        h8 = p[Square.H8] == Piece.byFENStyled("R")
+        a8 = p[Square.A8] == Piece.byFENStyled("r")
+        e8 = p[Square.E8] == Piece.byFENStyled("k")
+        h8 = p[Square.H8] == Piece.byFENStyled("r")
         ans: Self = cls.NONE
         if a1 and e1:
             ans &= cls.WHITE_QUEENSIDE
@@ -42,7 +42,7 @@ class Castle(Mirrorable, Starting, Flag, metaclass=FlagMeta):
             ans &= cls.BLACK_KINGSIDE
         return ans
 
-    def mirror(self) -> Self:
+    def mirror(self: Self, /) -> Self:
         ans: Self = type(self).NONE
         if self & type(self).WHITE_KINGSIDE:
             ans |= type(self).BLACK_KINGSIDE
@@ -55,7 +55,7 @@ class Castle(Mirrorable, Starting, Flag, metaclass=FlagMeta):
         return ans
 
     @classmethod
-    def starting(cls) -> Self:
+    def starting(cls: type, /) -> Self:
         return cls.ALL
 
 

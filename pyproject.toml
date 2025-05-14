@@ -28,7 +28,7 @@ keywords = []
 name = "frozenchess"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "0.0.0+simple.2"
+version = "0.0.0+simple.3"
 
 [project.license]
 file = "LICENSE.txt"

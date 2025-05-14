@@ -6,7 +6,7 @@ from typing import *
 import keyalias
 from normedtuple import normedtuple
 
-from frozenchess.abc import *
+from frozenchess.bases import *
 from frozenchess.core.Castle import Castle
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Placement import Placement
@@ -67,7 +67,7 @@ def BaseFEN(
 )
 class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
     @classmethod
-    def byFENStyled(cls, styled: Any) -> Self:
+    def byFENStyled(cls: type, /, styled: Any) -> Self:
         s: str = str(styled)
         parts: list = s.split()
         parts[0] = Placement.byFENStyled(parts[0])
@@ -79,7 +79,7 @@ class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
         ans: Self = cls(parts)
         return ans
 
-    def fenStyled(self) -> str:
+    def fenStyled(self: Self, /) -> str:
         l: list = list()
         l.append(self.placement.fenStyled())
         l.append(self.turn.fenStyled())
@@ -90,7 +90,7 @@ class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
         ans: str = " ".join(l)
         return ans
 
-    def mirror(self) -> Self:
+    def mirror(self: Self, /) -> Self:
         l: list = list(self)
         i: int = 0
         for i in range(4):
@@ -99,5 +99,5 @@ class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
         return ans
 
     @classmethod
-    def starting(cls) -> Self:
+    def starting(cls: type) -> Self:
         return cls(None, placement=Placement.starting())

@@ -5,7 +5,7 @@ from typing import *
 import chess
 from normedtuple import normedtuple
 
-from frozenchess.abc import *
+from frozenchess.bases import *
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Square import Square
 
@@ -14,7 +14,10 @@ __all__ = ["Placement"]
 
 @normedtuple
 def BasePlacement(
-    cls: type, other: Optional[Iterable] = None, /, **kwargs: Optional[Piece]
+    cls: type,
+    other: Optional[Iterable] = None,
+    /,
+    **kwargs: Optional[Piece],
 ) -> list:
     ans: list = [None] * 64
     if other is not None:
@@ -36,7 +39,7 @@ def BasePlacement(
 
 class Placement(BasePlacement, Starting):
     @classmethod
-    def byFENStyled(cls, styled: Any) -> Self:
+    def byFENStyled(cls: type, /, styled: Any) -> Self:
         full_fen: str = str(styled) + " w - - 0 1"
         board: chess.Board = chess.Board(full_fen)
         data: list = list()
@@ -52,9 +55,9 @@ class Placement(BasePlacement, Starting):
         ans: Self = cls(data)
         return ans
 
-    def fenStyled(self) -> str:
-        fen_rows: list = []
-        for rank in range(8, 0, -1):  # ranks 8 to 1
+    def fenStyled(self: Self, /) -> str:
+        fenRows: list = []
+        for rank in range(8, 0, -1):
             row: str = ""
             empty: int = 0
             for file in range(8):
@@ -69,14 +72,14 @@ class Placement(BasePlacement, Starting):
                 row += piece.fenStyled()
             if empty > 0:
                 row += str(empty)
-            fen_rows.append(row)
+            fenRows.append(row)
 
-        return "/".join(fen_rows)
+        return "/".join(fenRows)
 
-    def mirror(self) -> Self:
+    def mirror(self: Self, /) -> Self:
         "This method swaps the players."
         return type(self)(reversed(self))
 
     @classmethod
-    def starting(cls) -> Self:
+    def starting(cls: type, /) -> Self:
         return cls.byFENStyled("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")

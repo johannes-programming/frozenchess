@@ -7,25 +7,25 @@ import keyalias
 from normedtuple import normedtuple
 
 from frozenchess._utils import *
-from frozenchess.abc import *
+from frozenchess.bases import *
 
 __all__ = ["Piece"]
 
 
-class Color(Mirrorable, Flag, metaclass=FlagMeta):
+class Color(Mirrorable, Flag):
     WHITE = True
     BLACK = False
 
     @classmethod
-    def _mod(cls):
+    def _mod(cls: type, /) -> int:
         return 2
 
-    def mirror(self) -> Self:
+    def mirror(self: Self, /) -> Self:
         "This method swaps the players."
         return ~self
 
 
-class Kind(UCIStylable, StrEnum, metaclass=ABCEnumMeta):
+class Kind(UCIStylable, StrEnum):
     PAWN = ""
     KNIGHT = "N"
     BISHOP = "B"
@@ -34,14 +34,14 @@ class Kind(UCIStylable, StrEnum, metaclass=ABCEnumMeta):
     KING = "K"
 
     @classmethod
-    def byUCIStyled(cls, styled: Any) -> Self:
+    def byUCIStyled(cls: type, /, styled: Any) -> Self:
         s: str = str(styled)
         if s == "K":
             raise ValueError(styled)
         ans: Self = cls(s)
         return ans
 
-    def uciStyled(self) -> str:
+    def uciStyled(self: Self, /) -> str:
         return self.value
 
 
@@ -70,13 +70,13 @@ def BasePiece(
 @keyalias.getdecorator(color=0, kind=1)
 class Piece(BasePiece, FENStylable, Mirrorable):
     @classmethod
-    def byFENStyled(cls, styled: Any) -> Self:
+    def byFENStyled(cls: type, /, styled: Any) -> Self:
         return cls._ANTIFEN[str(styled)]
 
-    def fenStyled(self) -> str:
+    def fenStyled(self: Self, /) -> str:
         return type(self)._FEN[self]
 
-    def mirror(self) -> Self:
+    def mirror(self: Self, /) -> Self:
         "This method swaps the players."
         c: Color = self.color.mirror()
         k: Kind = self.kind

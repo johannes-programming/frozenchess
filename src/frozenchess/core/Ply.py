@@ -5,7 +5,7 @@ from typing import *
 import keyalias
 from normedtuple import normedtuple
 
-from frozenchess.abc import *
+from frozenchess.bases import *
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Square import Square
 
@@ -46,7 +46,7 @@ def BasePly(
 @keyalias.getdecorator(start=0, stop=1, promotion=2)
 class Ply(BasePly, Mirrorable, UCIStylable):
     @classmethod
-    def byUCIStyled(cls, styled: Any) -> Self:
+    def byUCIStyled(cls: type, /, styled: Any) -> Self:
         s: str = str(styled)
         a: str = s[:2]
         b: str = s[2:4]
@@ -57,10 +57,10 @@ class Ply(BasePly, Mirrorable, UCIStylable):
         ans: Self = cls([x, y, z])
         return ans
 
-    def isempty(self) -> bool:
+    def isempty(self: Self, /) -> bool:
         return self == EMPTY
 
-    def mirror(self) -> Self:
+    def mirror(self: Self, /) -> Self:
         "This method swaps the players."
         a: Square = self.start
         b: Square = self.stop
