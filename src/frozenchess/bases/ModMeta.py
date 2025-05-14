@@ -1,10 +1,10 @@
 from enum import EnumMeta
 from typing import *
 
-__all__ = ["FlagMeta"]
+__all__ = ["ModMeta"]
 
 
-class FlagMeta(EnumMeta):
+class ModMeta(EnumMeta):
     def __call__(cls: type, value: Any, *args: Any, **kwargs: Any) -> Self:
         value = value % cls._mod()
         return super().__call__(value, *args, **kwargs)

@@ -5,14 +5,12 @@ from typing import *
 
 from frozenchess.bases.AbstractionError import *
 from frozenchess.bases.FENStylable import *
+from frozenchess.bases.Mod import *
 
-__all__ = ["Flag"]
+__all__ = ["IntMod"]
 
 
-class Flag(FENStylable, enum.IntFlag):
-    @classmethod
-    def _mod(cls: type) -> int:
-        raise AbstractionError
+class IntMod(FENStylable, Mod):
 
     @classmethod
     def byFENStyled(cls: type, styled: Any) -> Self:

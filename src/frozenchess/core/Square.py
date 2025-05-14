@@ -87,9 +87,10 @@ class Square(Mirrorable, Starting, UCIStylable, Flag):
 
     @classmethod
     def byUCIStyled(cls: type, /, styled: Any) -> Self:
-        s: str = str(styled)
+        s: str = str(styled).swapcase()
+        x: Any = None
         for x in cls:
-            if x.name.lower() == s:
+            if s == x.name:
                 return x
         raise ValueError(styled)
 
@@ -101,9 +102,10 @@ class Square(Mirrorable, Starting, UCIStylable, Flag):
 
     def mirror(self: Self, /) -> Self:
         "This method swaps the players."
-        r: int = 9 - self.rank()
-        n: str = self.file().name + str(r)
-        ans: Self = type(self)[n]
+        y: int = self // 8
+        x: int = self % 8
+        n: int = (7 - y) * 8 + x
+        ans: Self = type(self)(n)
         return ans
 
     def starting(self: Self, /) -> Piece:
@@ -113,7 +115,7 @@ class Square(Mirrorable, Starting, UCIStylable, Flag):
         return (self // 8) + 1
 
     def uciStyled(self: Self, /) -> str:
-        return self.name.lower()
+        return self.name.swapcase()
 
 
 def setup_getnative(square: Square) -> Piece:
@@ -133,7 +135,7 @@ def setup_getnative(square: Square) -> Piece:
 
 def setup() -> None:
     Square.Color = Color
-
+    x: Any = None
     for x in Square:
         x._NATIVE = setup_getnative(x)
         if x:

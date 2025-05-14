@@ -1,4 +1,3 @@
-import abc
 from typing import *
 
 from frozenchess.bases.AbstractionError import *
@@ -6,7 +5,7 @@ from frozenchess.bases.AbstractionError import *
 __all__ = ["UCIStylable"]
 
 
-class UCIStylable(abc.ABC):
+class UCIStylable:
     @classmethod
     def byUCIStyled(cls, styled: Any) -> Self:
         raise AbstractionError

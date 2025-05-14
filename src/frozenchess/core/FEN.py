@@ -99,5 +99,5 @@ class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
         return ans
 
     @classmethod
-    def starting(cls: type) -> Self:
+    def starting(cls: type, /) -> Self:
         return cls(None, placement=Placement.starting())

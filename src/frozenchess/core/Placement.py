@@ -24,8 +24,8 @@ def BasePlacement(
         ans = list(other)
         if len(ans) > 64:
             raise ValueError(other)
-    k: str
-    v: Any
+    k: str = ""
+    v: Any = None
     for k, v in kwargs.items():
         s: Square = Square[k.upper()]
         ans[s] = v

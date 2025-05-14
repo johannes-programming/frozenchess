@@ -7,8 +7,8 @@ __all__ = ["FENStylable"]
 
 class FENStylable:
     @classmethod
-    def byFENStyled(cls: type, styled: Any) -> Self:
+    def byFENStyled(cls: type, /, styled: Any) -> Self:
         raise AbstractionError
 
-    def fenStyled(self: Self) -> str:
+    def fenStyled(self: Self, /) -> str:
         raise AbstractionError
