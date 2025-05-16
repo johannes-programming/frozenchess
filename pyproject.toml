@@ -22,13 +22,14 @@ dependencies = [
     "chess>=1.11.2",
     "keyalias>=1.0.3",
     "normedtuple>=1.0",
+    "numpy>=2.0.2",
 ]
 description = "frozenchess"
 keywords = []
 name = "frozenchess"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "0.0.0+bitboard.1"
+version = "0.0.0+bitboard.2"
 
 [project.license]
 file = "LICENSE.txt"

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from enum import IntFlag
 from typing import *
 
 from frozenchess.bases import *
@@ -19,7 +20,7 @@ _NATIVES = [
 ]
 
 
-class File(Starting, Flag):
+class File(IntFlag, Mod, Starting):
     (
         A,
         B,

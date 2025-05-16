@@ -9,9 +9,13 @@ from frozenchess.core.Piece import Piece
 __all__ = ["Square"]
 
 
-class Color(Flag):
+class Color(Mod):
     LIGHT = True
     DARK = False
+
+    @classmethod
+    def _mod(cls: type, /) -> int:
+        return 2
 
     def mirror(self: Self, /) -> Self:
         "This method swaps the players."

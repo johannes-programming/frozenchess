@@ -7,8 +7,8 @@ __all__ = ["UCIStylable"]
 
 class UCIStylable:
     @classmethod
-    def byUCIStyled(cls, styled: Any) -> Self:
+    def byUCIStyled(cls: type, /, styled: Any) -> Self:
         raise AbstractionError
 
-    def uciStyled(self) -> str:
+    def uciStyled(self: Self, /) -> str:
         raise AbstractionError

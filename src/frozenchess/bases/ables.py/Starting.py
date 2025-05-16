@@ -7,5 +7,5 @@ __all__ = ["Starting"]
 
 class Starting:
     @classmethod
-    def starting(cls) -> Self:
+    def starting(cls: type, /) -> Self:
         raise AbstractionError

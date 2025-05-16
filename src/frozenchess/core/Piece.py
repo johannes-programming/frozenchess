@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import StrEnum
+from enum import IntFlag, StrEnum
 from typing import *
 
 import keyalias
@@ -12,7 +12,7 @@ from frozenchess.bases import *
 __all__ = ["Piece"]
 
 
-class Color(Mirrorable, Flag):
+class Color(FENEnum, IntFlag, Mirrorable, Mod):
     WHITE = True
     BLACK = False
 

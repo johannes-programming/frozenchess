@@ -38,10 +38,12 @@ def BasePlacement(
 
 
 class Placement(BasePlacement, Starting):
+
     @classmethod
     def byFENStyled(cls: type, /, styled: Any) -> Self:
-        full_fen: str = str(styled) + " w - - 0 1"
-        board: chess.Board = chess.Board(full_fen)
+        fen: str = str(styled)
+        fen = fen + " w - - 0 1"
+        board: chess.Board = chess.Board(fen)
         data: list = list()
         p: Any = None
         for i in range(64):

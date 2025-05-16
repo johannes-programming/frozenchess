@@ -1,15 +1,15 @@
 from __future__ import annotations
 
+from enum import Enum
 from typing import *
 
-from frozenchess.bases.AbstractionError import *
-from frozenchess.bases.FENStylable import *
-from frozenchess.bases.Mod import *
+from frozenchess.bases.ables import *
+from frozenchess.bases.abstraction import *
 
-__all__ = ["FENMod"]
+__all__ = ["FENEnum"]
 
 
-class FENMod(Mod, FENStylable):
+class FENEnum(FENStylable, Enum):
 
     @classmethod
     def byFENStyled(cls: type, /, styled: Any) -> Self:

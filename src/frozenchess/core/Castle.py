@@ -1,16 +1,17 @@
 from __future__ import annotations
 
+from enum import IntFlag
 from typing import *
 
 from frozenchess.bases import *
-from frozenchess.core.Piece import Piece
-from frozenchess.core.Placement import Placement
-from frozenchess.core.Square import Square
+from frozenchess.core.Piece import *
+from frozenchess.core.Placement import *
+from frozenchess.core.Square import *
 
 __all__ = ["Castle"]
 
 
-class Castle(Mirrorable, Starting, Flag):
+class Castle(FENEnum, IntFlag, Mirrorable, Mod, Starting):
     NONE = 0
     WHITE_KINGSIDE = 1
     WHITE_QUEENSIDE = 2
