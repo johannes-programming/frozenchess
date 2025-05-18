@@ -29,7 +29,7 @@ keywords = []
 name = "frozenchess"
 readme = "README.rst"
 requires-python = ">=3.11"
-version = "0.0.0+bitboard.2"
+version = "0.0.0+bitboard.3"
 
 [project.license]
 file = "LICENSE.txt"

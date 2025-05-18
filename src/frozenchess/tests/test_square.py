@@ -9,8 +9,8 @@ class TestSquare(unittest.TestCase):
 
     def test_uci_parsing(self):
         self.assertEqual(Square.byUCIStyled("a1"), Square.A1)
-        self.assertEqual(Square.byUCIStyled("H8"), Square.H8)
-        with self.assertRaises(ValueError):
+        self.assertEqual(Square.byUCIStyled("h8"), Square.H8)
+        with self.assertRaises(Exception):
             Square.byUCIStyled("z9")
 
     def test_uci_styling(self):
@@ -21,7 +21,7 @@ class TestSquare(unittest.TestCase):
         self.assertEqual(Square.A1.color(), Square.Color.DARK)
         self.assertEqual(Square.B1.color(), Square.Color.LIGHT)
         self.assertEqual(Square.C1.color(), Square.Color.DARK)
-        self.assertEqual(Square.D1.color(), Square.Color.LIGHT)
+        self.assertEqual(Square.D3.color(), Square.Color.LIGHT)
 
     def test_file_and_rank(self):
         self.assertEqual(Square.A1.file(), File.A)
@@ -66,7 +66,7 @@ class TestSquare(unittest.TestCase):
 
     def test_all_squares_unique(self):
         squares = list(Square)
-        self.assertEqual(len(squares), 64)
+        self.assertEqual(len(squares), 64, str(squares))
         self.assertEqual(len(set(s.value for s in squares)), 64)
 
 

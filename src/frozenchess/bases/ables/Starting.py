@@ -1,6 +1,6 @@
 from typing import *
 
-from frozenchess.bases.AbstractionError import *
+from frozenchess.bases.abstraction import *
 
 __all__ = ["Starting"]
 

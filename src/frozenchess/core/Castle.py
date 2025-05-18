@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import IntFlag
 from typing import *
 
 from frozenchess.bases import *
@@ -11,7 +10,7 @@ from frozenchess.core.Square import *
 __all__ = ["Castle"]
 
 
-class Castle(FENEnum, IntFlag, Mirrorable, Mod, Starting):
+class Castle(FENStylable, Mirrorable, Starting, Flag):
     NONE = 0
     WHITE_KINGSIDE = 1
     WHITE_QUEENSIDE = 2
@@ -20,8 +19,16 @@ class Castle(FENEnum, IntFlag, Mirrorable, Mod, Starting):
     ALL = 15
 
     @classmethod
-    def _mod(cls: type, /) -> int:
-        return 16
+    def byFENStyled(cls: type, /, styled: Any) -> Self:
+        s: str = str(styled)
+        if s == "-":
+            return cls(0)
+        n: int = 0
+        for i, x in enumerate("KQkq"):
+            if s.startswith(x):
+                n += 2**i
+        ans: Self = cls(n)
+        return ans
 
     @classmethod
     def byPlacement(cls: type, /, placement: Placement) -> Self:
@@ -43,36 +50,20 @@ class Castle(FENEnum, IntFlag, Mirrorable, Mod, Starting):
             ans &= cls.BLACK_KINGSIDE
         return ans
 
+    def fenStyled(self: Self, /) -> str:
+        if self == 0:
+            return "-"
+        ans: str = ""
+        for i, x in enumerate("KQkq"):
+            if (2**i) & self:
+                ans += x
+        return ans
+
     def mirror(self: Self, /) -> Self:
-        ans: Self = type(self).NONE
-        if self & type(self).WHITE_KINGSIDE:
-            ans |= type(self).BLACK_KINGSIDE
-        if self & type(self).WHITE_QUEENSIDE:
-            ans |= type(self).BLACK_QUEENSIDE
-        if self & type(self).BLACK_KINGSIDE:
-            ans |= type(self).WHITE_KINGSIDE
-        if self & type(self).BLACK_QUEENSIDE:
-            ans |= type(self).WHITE_QUEENSIDE
+        n: int = (self << 2) | (self >> 2)
+        ans: Self = type(self)(n)
         return ans
 
     @classmethod
     def starting(cls: type, /) -> Self:
         return cls.ALL
-
-
-def setup() -> None:
-    Castle.NONE._fen = "-"
-    for n in range(1, 16):
-        x = Castle(n)
-        x._fen = ""
-        if x & Castle.WHITE_KINGSIDE:
-            x._fen += "K"
-        if x & Castle.WHITE_QUEENSIDE:
-            x._fen += "Q"
-        if x & Castle.BLACK_KINGSIDE:
-            x._fen += "k"
-        if x & Castle.BLACK_QUEENSIDE:
-            x._fen += "q"
-
-
-setup()

@@ -28,7 +28,7 @@ class TestPiece(unittest.TestCase):
         self.assertEqual(p.fenStyled(), "q")
 
     def test_mirror(self):
-        self.assertEqual(Color.WHITE, ~Color.BLACK)
+        self.assertEqual(Color.WHITE.mirror(), Color.BLACK)
         self.assertEqual(Color.WHITE, Color.BLACK.mirror())
         original = Piece(color=Color.WHITE, kind=Kind.BISHOP)
         mirrored = original.mirror()

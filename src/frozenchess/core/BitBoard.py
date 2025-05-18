@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import IntFlag
 from typing import *
 
 from frozenchess.bases import *
@@ -8,7 +7,7 @@ from frozenchess.bases import *
 __all__ = ["BitBoard"]
 
 
-class BitBoard(FENEnum, IntFlag, Mod):
+class BitBoard(Flag):
     A1 = 1
     B1 = 2
     C1 = 4
@@ -73,7 +72,3 @@ class BitBoard(FENEnum, IntFlag, Mod):
     F8 = 2305843009213693952
     G8 = 4611686018427387904
     H8 = 9223372036854775808
-
-    @classmethod
-    def _mod(cls: type, /) -> int:
-        return 18446744073709551616

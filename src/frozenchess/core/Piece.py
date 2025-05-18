@@ -1,31 +1,31 @@
 from __future__ import annotations
 
-from enum import IntFlag, StrEnum
+import enum
 from typing import *
 
-import keyalias
-from normedtuple import normedtuple
-
-from frozenchess._utils import *
 from frozenchess.bases import *
+from frozenchess.utils import _utils
 
 __all__ = ["Piece"]
 
 
-class Color(FENEnum, IntFlag, Mirrorable, Mod):
+class Color(FENStylable, Mirrorable, Mod):
     WHITE = True
     BLACK = False
 
     @classmethod
-    def _mod(cls: type, /) -> int:
-        return 2
+    def byFENStyled(cls: type, /, styled: Any) -> Any:
+        return dict(b=0, w=1)[str(styled)]
+
+    def fenStyled(self: Self, /) -> str:
+        return "bw"[self]
 
     def mirror(self: Self, /) -> Self:
         "This method swaps the players."
-        return ~self
+        return type(self)(1 - self)
 
 
-class Kind(UCIStylable, StrEnum):
+class Kind(UCIStylable, enum.StrEnum):
     PAWN = ""
     KNIGHT = "N"
     BISHOP = "B"
@@ -45,7 +45,7 @@ class Kind(UCIStylable, StrEnum):
         return self.value
 
 
-@normedtuple
+@_utils.tuplize
 def BasePiece(
     cls: type,
     other: Optional[Iterable] = None,
@@ -67,7 +67,6 @@ def BasePiece(
     return c, k
 
 
-@keyalias.getdecorator(color=0, kind=1)
 class Piece(BasePiece, FENStylable, Mirrorable):
     @classmethod
     def byFENStyled(cls: type, /, styled: Any) -> Self:
@@ -87,8 +86,6 @@ class Piece(BasePiece, FENStylable, Mirrorable):
 def setup() -> None:
     Piece.Color = Color
     Piece.Kind = Kind
-    Color.WHITE._fen = "w"
-    Color.BLACK._fen = "b"
     Piece._ANTIFEN = {
         "P": Piece(color=Color.WHITE, kind=Kind.PAWN),
         "N": Piece(color=Color.WHITE, kind=Kind.KNIGHT),
@@ -103,7 +100,7 @@ def setup() -> None:
         "q": Piece(color=Color.BLACK, kind=Kind.QUEEN),
         "k": Piece(color=Color.BLACK, kind=Kind.KING),
     }
-    Piece._FEN = antidict(Piece._ANTIFEN)
+    Piece._FEN = _utils.antidict(Piece._ANTIFEN)
 
 
 setup()

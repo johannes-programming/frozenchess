@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import enum
 from typing import *
 
 from frozenchess.bases import *
@@ -9,20 +10,16 @@ from frozenchess.core.Piece import Piece
 __all__ = ["Square"]
 
 
-class Color(Mod):
+class Color(Mirrorable, Mod):
     LIGHT = True
     DARK = False
 
-    @classmethod
-    def _mod(cls: type, /) -> int:
-        return 2
-
     def mirror(self: Self, /) -> Self:
         "This method swaps the players."
-        return ~self
+        return type(self)(1 - self)
 
 
-class Square(Mirrorable, Starting, UCIStylable, Flag):
+class Square(FENStylable, Mirrorable, Starting, UCIStylable, Mod):
 
     A1 = 0
     B1 = 1
@@ -90,33 +87,38 @@ class Square(Mirrorable, Starting, UCIStylable, Flag):
     H8 = 63
 
     @classmethod
+    def byFENStyled(cls: type, /, styled: Any) -> Self:
+        s: str = str(styled)
+        if s == "-":
+            return cls(0)
+        else:
+            return cls.byUCIStyled(s)
+
+    @classmethod
     def byUCIStyled(cls: type, /, styled: Any) -> Self:
-        s: str = str(styled).swapcase()
-        x: Any = None
-        for x in cls:
-            if s == x.name:
-                return x
-        raise ValueError(styled)
+        return cls[str(styled).swapcase()]
 
     def color(self: Self, /) -> Color:
         return Color(self % 2)
 
     def file(self: Self, /) -> File:
-        return File(self // 8)
+        return File(self % 8)
 
     def mirror(self: Self, /) -> Self:
         "This method swaps the players."
-        y: int = self // 8
-        x: int = self % 8
-        n: int = (7 - y) * 8 + x
-        ans: Self = type(self)(n)
-        return ans
+        return (type(self))(56 ^ self)
 
     def starting(self: Self, /) -> Piece:
         return self._NATIVE
 
     def rank(self: Self, /) -> int:
         return (self // 8) + 1
+
+    def fenStyled(self: Self, /) -> str:
+        if self == 0:
+            return "-"
+        else:
+            return self.uciStyled()
 
     def uciStyled(self: Self, /) -> str:
         return self.name.swapcase()

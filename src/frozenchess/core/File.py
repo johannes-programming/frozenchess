@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from enum import IntFlag
+import enum
 from typing import *
 
 from frozenchess.bases import *
@@ -20,21 +20,15 @@ _NATIVES = [
 ]
 
 
-class File(IntFlag, Mod, Starting):
-    (
-        A,
-        B,
-        C,
-        D,
-        E,
-        F,
-        G,
-        H,
-    ) = range(8)
-
-    @classmethod
-    def _mod(cls: type, /) -> int:
-        return 8
+class File(Starting, Mod):
+    A = 0
+    B = 1
+    C = 2
+    D = 3
+    E = 4
+    F = 5
+    G = 6
+    H = 7
 
     def starting(self: Self, /) -> Piece.Kind:
         return _NATIVES[self]

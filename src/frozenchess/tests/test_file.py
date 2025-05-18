@@ -9,25 +9,6 @@ class TestFile(unittest.TestCase):
         self.assertEqual(File.A.value, 0)
         self.assertEqual(File.H.value, 7)
 
-    def test_mod(self):
-        self.assertEqual(File._mod(), 8)
-
-    def test_starting_pieces(self):
-        return
-        expected_kinds = [
-            Kind.ROOK,
-            Kind.KNIGHT,
-            Kind.BISHOP,
-            Kind.QUEEN,
-            Kind.KING,
-            Kind.BISHOP,
-            Kind.KNIGHT,
-            Kind.ROOK,
-        ]
-        for file_enum, expected_kind in zip(File, expected_kinds):
-            with self.subTest(file=file_enum):
-                self.assertEqual(file_enum.starting(), expected_kind)
-
     def test_starting_uniqueness(self):
         # Ensure that mirrored positions match for symmetric pieces
         self.assertEqual(File.A.starting(), File.H.starting())

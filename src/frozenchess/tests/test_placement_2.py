@@ -36,8 +36,8 @@ class TestPlacement(unittest.TestCase):
 
     def test_from_kwargs(self):
         placement = Placement(
-            A1=Piece(color=Color.WHITE, kind=Kind.ROOK),
-            D5=Piece(color=Color.BLACK, kind=Kind.QUEEN),
+            a1=Piece(color=Color.WHITE, kind=Kind.ROOK),
+            d5=Piece(color=Color.BLACK, kind=Kind.QUEEN),
         )
         self.assertEqual(placement[Square.A1], Piece(color=Color.WHITE, kind=Kind.ROOK))
         self.assertEqual(

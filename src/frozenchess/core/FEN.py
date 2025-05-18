@@ -3,19 +3,17 @@ from __future__ import annotations
 import operator
 from typing import *
 
-import keyalias
-from normedtuple import normedtuple
-
 from frozenchess.bases import *
 from frozenchess.core.Castle import Castle
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Placement import Placement
 from frozenchess.core.Square import Square
+from frozenchess.utils import _utils
 
 __all__ = ["FEN"]
 
 
-@normedtuple
+@_utils.tuplize
 def BaseFEN(
     cls: type,
     other: Optional[Iterable] = None,
@@ -57,14 +55,6 @@ def BaseFEN(
     return [p, t, c, e, h, f]
 
 
-@keyalias.getdecorator(
-    placement=0,
-    turn=1,
-    castle=2,
-    ep=3,
-    halfmoveClock=4,
-    fullmoveNumber=5,
-)
 class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
     @classmethod
     def byFENStyled(cls: type, /, styled: Any) -> Self:

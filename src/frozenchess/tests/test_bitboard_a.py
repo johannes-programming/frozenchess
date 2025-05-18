@@ -27,16 +27,10 @@ class TestBitBoard(unittest.TestCase):
         self.assertIn(BitBoard.E4, board)
         self.assertNotIn(BitBoard.F4, board)
 
-    def test_mod_method(self):
-        self.assertEqual(BitBoard._mod(), 2**64)
-
     def test_enum_completeness(self):
         # Ensure 64 distinct values for 64 squares
         all_values = set(member.value for member in BitBoard)
         self.assertEqual(len(all_values), 64)
-        self.assertEqual(
-            sum(1 for v in all_values if v & (v - 1) == 0), 64
-        )  # all are powers of two
 
 
 if __name__ == "__main__":

@@ -1,14 +1,13 @@
-from __future__ import annotations
-
+import enum
+import operator
 from typing import *
-
-from frozenchess.bases.AbstractionError import *
-from frozenchess.bases.ModMeta import *
 
 __all__ = ["Mod"]
 
 
-class Mod(metaclass=ModMeta):
+class Mod(enum.IntEnum):
     @classmethod
-    def _mod(cls: type) -> int:
-        raise AbstractionError
+    def _missing_(cls: type, /, value: SupportsIndex) -> Self:
+        i: int = operator.index(value) % len(cls)
+        ans: Self = cls(i)
+        return ans

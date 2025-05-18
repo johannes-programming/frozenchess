@@ -2,19 +2,17 @@ from __future__ import annotations
 
 from typing import *
 
-import keyalias
-from normedtuple import normedtuple
-
 from frozenchess.bases import *
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Square import Square
+from frozenchess.utils import _utils
 
 __all__ = ["Ply"]
 
 EMPTY: tuple = (0, 0, Piece.Kind.PAWN)
 
 
-@normedtuple
+@_utils.tuplize
 def BasePly(
     cls: type,
     other: Optional[Iterable] = None,
@@ -43,11 +41,12 @@ def BasePly(
     return a, b, c
 
 
-@keyalias.getdecorator(start=0, stop=1, promotion=2)
 class Ply(BasePly, Mirrorable, UCIStylable):
     @classmethod
     def byUCIStyled(cls: type, /, styled: Any) -> Self:
         s: str = str(styled)
+        if s == "0000":
+            return cls()
         a: str = s[:2]
         b: str = s[2:4]
         c: str = s[4:]
@@ -68,3 +67,12 @@ class Ply(BasePly, Mirrorable, UCIStylable):
             a = a.mirror()
             b = b.mirror()
         return type(self)([a, b, self.promotion])
+
+    def uciStyled(self: Self, /) -> str:
+        if self == EMPTY:
+            return "0000"
+        a: str = self.start.uciStyled()
+        b: str = self.stop.uciStyled()
+        c: str = self.promotion.uciStyled()
+        ans: str = a + b + c
+        return ans
