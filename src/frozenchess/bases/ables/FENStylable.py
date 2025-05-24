@@ -1,6 +1,6 @@
 from typing import *
 
-from frozenchess.bases.abstraction import *
+from frozenchess.utils import *
 
 __all__ = ["FENStylable"]
 
