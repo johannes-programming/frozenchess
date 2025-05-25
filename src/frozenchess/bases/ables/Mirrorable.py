@@ -7,4 +7,5 @@ __all__ = ["Mirrorable"]
 
 class Mirrorable:
     def mirror(self) -> Self:
+        "This method swaps the players."
         raise AbstractionError

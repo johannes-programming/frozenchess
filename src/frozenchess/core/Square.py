@@ -19,7 +19,8 @@ class Color(Mirrorable, Mod):
         return type(self)(1 - self)
 
 
-class Square(FENStylable, Mirrorable, Starting, UCIStylable, Mod):
+class Square(FENStylable, HasNative, Mirrorable, UCIStylable, Mod):
+    "This enum represents the squares of the board."
 
     A1 = 0
     B1 = 1
@@ -106,7 +107,7 @@ class Square(FENStylable, Mirrorable, Starting, UCIStylable, Mod):
 
     def mirror(self: Self, /) -> Self:
         "This method swaps the players."
-        return (type(self))(56 ^ self)
+        return type(self)(56 ^ self)
 
     def starting(self: Self, /) -> Piece:
         return self._NATIVE
@@ -127,7 +128,7 @@ class Square(FENStylable, Mirrorable, Starting, UCIStylable, Mod):
 def setup_getnative(square: Square) -> Piece:
     ans: Optional[Piece] = None
     rank: int = square.rank()
-    kind: Piece.Kind = square.file().starting()
+    kind: Piece.Kind = square.file().native()
     if rank == 1:
         ans = Piece(color=Piece.Color.WHITE, kind=kind)
     elif rank == 2:

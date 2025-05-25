@@ -2,7 +2,7 @@ import inspect
 from typing import *
 
 import keyalias
-import normedtuple
+import norming
 from datarepr import datarepr
 
 __all__ = ["antidict", "tuplize"]
@@ -18,7 +18,7 @@ def antidict(dictionary: dict) -> dict:
 
 
 def tuplize(norm: Callable) -> type:
-    ans: type = normedtuple.normedtuple(norm)
+    ans: type = norming.Norming(tuple)(norm)
     names: list = tuplize_keywords(ans)
     tuplize_alias(ans, names)
     ans.__repr__ = tuplize_repr(names)

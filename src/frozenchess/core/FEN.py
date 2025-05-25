@@ -26,6 +26,7 @@ def BaseFEN(
     halfmoveClock: Optional[int] = None,
     fullmoveNumber: Optional[int] = None,
 ):
+    "This function will be bound as the norm inside of the constructor of FEN."
     p: Any = None
     t: Any = None
     c: Any = None
@@ -81,6 +82,7 @@ class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
         return ans
 
     def mirror(self: Self, /) -> Self:
+        "This method swaps the players."
         l: list = list(self)
         i: int = 0
         for i in range(4):
@@ -90,4 +92,4 @@ class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
 
     @classmethod
     def starting(cls: type, /) -> Self:
-        return cls(None, placement=Placement.starting())
+        return cls(placement=Placement.starting())

@@ -1,7 +1,6 @@
 import unittest
 
 from frozenchess.core.File import File
-from frozenchess.core.Piece import Kind
 
 
 class TestFile(unittest.TestCase):
@@ -9,11 +8,11 @@ class TestFile(unittest.TestCase):
         self.assertEqual(File.A.value, 0)
         self.assertEqual(File.H.value, 7)
 
-    def test_starting_uniqueness(self):
+    def test_native_uniqueness(self):
         # Ensure that mirrored positions match for symmetric pieces
-        self.assertEqual(File.A.starting(), File.H.starting())
-        self.assertEqual(File.B.starting(), File.G.starting())
-        self.assertEqual(File.C.starting(), File.F.starting())
+        self.assertEqual(File.A.native(), File.H.native())
+        self.assertEqual(File.B.native(), File.G.native())
+        self.assertEqual(File.C.native(), File.F.native())
 
 
 if __name__ == "__main__":

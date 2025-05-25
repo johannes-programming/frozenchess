@@ -20,7 +20,9 @@ _NATIVES = [
 ]
 
 
-class File(Starting, Mod):
+class File(HasNative, Mod):
+    "This enum represents the files of the chessboard."
+
     A = 0
     B = 1
     C = 2
@@ -30,5 +32,6 @@ class File(Starting, Mod):
     G = 6
     H = 7
 
-    def starting(self: Self, /) -> Piece.Kind:
+    def native(self: Self, /) -> Piece.Kind:
+        "This method returns the native of the instance."
         return _NATIVES[self]
