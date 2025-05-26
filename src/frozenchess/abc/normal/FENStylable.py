@@ -1,15 +1,17 @@
+import abc
 from typing import *
-
-from frozenchess.utils import *
 
 __all__ = ["FENStylable"]
 
 
-class FENStylable:
+class FENStylable(abc.ABC):
     @classmethod
+    @abc.abstractmethod
     def byFENStyled(cls: type, /, styled: Any) -> Self:
         "This classmethod returns an instance created from FEN styled input."
-        raise AbstractionError
+        pass
 
+    @abc.abstractmethod
     def fenStyled(self: Self, /) -> str:
-        raise AbstractionError
+        "This method returns a string in FEN style."
+        pass

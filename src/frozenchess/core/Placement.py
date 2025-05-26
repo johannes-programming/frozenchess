@@ -4,11 +4,11 @@ from typing import *
 
 import chess
 
-from frozenchess.bases import *
+from frozenchess import _utils
+from frozenchess.abc import *
 from frozenchess.core.BitBoard import *
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Square import Square
-from frozenchess.utils import _utils
 
 __all__ = ["Placement"]
 

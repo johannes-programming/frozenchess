@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import *
 
-from frozenchess.bases import *
+from frozenchess.abc import *
 
 __all__ = ["BitBoard"]
 

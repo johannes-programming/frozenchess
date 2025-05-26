@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import *
 
-from frozenchess.bases import *
+from frozenchess.abc import *
 from frozenchess.core.Piece import *
 from frozenchess.core.Placement import *
 from frozenchess.core.Square import *

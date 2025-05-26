@@ -3,12 +3,12 @@ from __future__ import annotations
 import operator
 from typing import *
 
-from frozenchess.bases import *
+from frozenchess import _utils
+from frozenchess.abc import *
 from frozenchess.core.Castle import Castle
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Placement import Placement
 from frozenchess.core.Square import Square
-from frozenchess.utils import _utils
 
 __all__ = ["FEN"]
 

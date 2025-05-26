@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-import enum
 from typing import *
 
-from frozenchess.bases import *
+from frozenchess.abc import *
 from frozenchess.core.Piece import Piece
 
 __all__ = ["File"]

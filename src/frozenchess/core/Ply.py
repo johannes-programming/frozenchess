@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import *
 
-from frozenchess.bases import *
+from frozenchess import _utils
+from frozenchess.abc import *
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Square import Square
-from frozenchess.utils import _utils
 
 __all__ = ["Ply"]
 

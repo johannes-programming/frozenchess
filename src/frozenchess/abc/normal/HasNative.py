@@ -1,9 +1,9 @@
+from abc import ABC, abstractmethod
 from typing import *
 
-from frozenchess.utils import *
 
-
-class HasNative:
+class HasNative(ABC):
+    @abstractmethod
     def native(self: Self, /) -> Any:
         "This method returns the native of the instance."
-        raise AbstractionError
+        pass

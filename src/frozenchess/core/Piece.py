@@ -3,8 +3,8 @@ from __future__ import annotations
 import enum
 from typing import *
 
-from frozenchess.bases import *
-from frozenchess.utils import _utils
+from frozenchess import _utils
+from frozenchess.abc import *
 
 __all__ = ["Piece"]
 
@@ -25,7 +25,7 @@ class Color(FENStylable, Mirrorable, Mod):
         return type(self)(1 - self)
 
 
-class Kind(UCIStylable, enum.StrEnum):
+class Kind(UCIStylable, Token):
     PAWN = ""
     KNIGHT = "N"
     BISHOP = "B"

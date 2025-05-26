@@ -1,15 +1,16 @@
+from abc import ABC, abstractmethod
 from typing import *
-
-from frozenchess.utils import *
 
 __all__ = ["UCIStylable"]
 
 
-class UCIStylable:
+class UCIStylable(ABC):
     @classmethod
+    @abstractmethod
     def byUCIStyled(cls: type, /, styled: Any) -> Self:
         "This classmethod returns an instance created from UCI styled input."
-        raise AbstractionError
+        pass
 
+    @abstractmethod
     def uciStyled(self: Self, /) -> str:
-        raise AbstractionError
+        pass

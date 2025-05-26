@@ -3,7 +3,7 @@ from __future__ import annotations
 import enum
 from typing import *
 
-from frozenchess.bases import *
+from frozenchess.abc import *
 from frozenchess.core.File import File
 from frozenchess.core.Piece import Piece
 
@@ -100,9 +100,11 @@ class Square(FENStylable, HasNative, Mirrorable, UCIStylable, Mod):
         return cls[str(styled).swapcase()]
 
     def color(self: Self, /) -> Color:
+        "This method returns the color of the instance."
         return Color(self % 2)
 
     def file(self: Self, /) -> File:
+        "This method returns the file of the instance."
         return File(self % 8)
 
     def mirror(self: Self, /) -> Self:
@@ -113,6 +115,7 @@ class Square(FENStylable, HasNative, Mirrorable, UCIStylable, Mod):
         return self._NATIVE
 
     def rank(self: Self, /) -> int:
+        "This method returns the rank of the instance."
         return (self // 8) + 1
 
     def fenStyled(self: Self, /) -> str:
@@ -145,10 +148,7 @@ def setup() -> None:
     x: Any = None
     for x in Square:
         x._NATIVE = setup_getnative(x)
-        if x:
-            x._fen = x.name.lower()
-        else:
-            x._fen = "-"
+        x._fen = x.name.lower() if x else "-"
         x._uci = x.name.lower()
 
 
