@@ -9,6 +9,7 @@ from frozenchess.core.Castle import Castle
 from frozenchess.core.Piece import Piece
 from frozenchess.core.Placement import Placement
 from frozenchess.core.Square import Square
+from frozenchess.core.Ply import Ply
 
 __all__ = ["FEN"]
 
@@ -57,6 +58,10 @@ def BaseFEN(
 
 
 class FEN(BaseFEN, FENStylable, Mirrorable, Starting):
+    def apply(self:Self, /, ply:Any)->Self:
+        p:Ply = Ply(ply)
+        
+
     @classmethod
     def byFENStyled(cls: type, /, styled: Any) -> Self:
         s: str = str(styled)
